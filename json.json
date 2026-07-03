@@ -1,0 +1,136 @@
+{
+    "job_id": "3f71d0bd-f622-4a18-ad3d-94f4aa0a768f",
+    "target_type": "lead",
+    "status": "done",
+    "progress": 100,
+    "message": "Scraping termine: 12 lead(s) collecte(s).",
+    "total_leads": 12,
+    "total_properties": 0,
+    "total_results": 12,
+    "leads": [
+        {
+            "full_name": null,
+            "first_name": null,
+            "last_name": null,
+            "job_title": "extract data from body",
+            "company_name": "Activepieces Community",
+            "company_domain": "community.activepieces.com",
+            "company_size": null,
+            "industry": null,
+            "email": null,
+            "phone": null,
+            "linkedin_url": null,
+            "website": "https://community.activepieces.com/t/webhook-feature-extract-data-from-body/793",
+            "city": "$('Webhook').first().json.body.area",
+            "country": null,
+            "lead_category": "real_estate",
+            "lead_intent": "buy",
+            "demand_property_type": "building,house",
+            "demand_location": "$('Webhook').first().json.body.area",
+            "budget_min": 5000000.0,
+            "budget_max": 25000000.0,
+            "id": "ad2bef66-9738-4ad9-b22f-bb25fcfc7221",
+            "source": "google",
+            "source_url": "https://community.activepieces.com/t/webhook-feature-extract-data-from-body/793",
+            "score": 34,
+            "qualification": "cold",
+            "is_verified": false,
+            "fingerprint": "86364b57bce5aa9110617b8f937cef3b09abb62c524a34df3055dfa0db0a8348",
+            "scraped_at": "2026-06-20T11:48:03.679546Z",
+            "raw_description": "# Webhook feature - extract data from body. ## Extract data from Webhook body. I just went through the process of getting data out of a webhook POST request. I appreciate having full access to webhook data, but it’s inconvenient that there is no simple way to extract data from the “body”. I received assistance from someone else to write the code that extracts data from the webhook and sends it to the next step. I feel that the webhook trigger is missing my expectations of what it should do out of the box. This should be something that happens out of the box. If you send the body as JSON, it will be inside the body and will be shown in the data to insert. The only wayI was able to make it work was using a web form to send a POST/json request to the webhook and write a script to extract data from the body, as shown in the picture below.",
+            "raw_data": {
+                "title": "Webhook feature - extract data from body - Feature Requests (Old) - Activepieces Community",
+                "snippet": "# Webhook feature - extract data from body. ## Extract data from Webhook body. I just went through the process of getting data out of a webhook POST request. I appreciate having full access to webhook data, but it’s inconvenient that there is no simple way to extract data from the “body”. I received assistance from someone else to write the code that extracts data from the webhook and sends it to the next step. I feel that the webhook trigger is missing my expectations of what it should do out of the box. This should be something that happens out of the box. If you send the body as JSON, it will be inside the body and will be shown in the data to insert. The only wayI was able to make it work was using a web form to send a POST/json request to the webhook and write a script to extract data from the body, as shown in the picture below.",
+                "url": "https://community.activepieces.com/t/webhook-feature-extract-data-from-body/793",
+                "provider": "tavily",
+                "provider_score": 0.15506595,
+                "favicon": "https://community.activepieces.com/uploads/default/optimized/1X/f3af8cd75e0cc52ac7f19a3b45663ce0396f5016_2_180x180.png",
+                "structured_data": {
+                    "company_name": "Activepieces Community"
+                },
+                "quality": {
+                    "email_quality": {
+                        "valid_syntax": false,
+                        "domain_has_mx": false,
+                        "type": null
+                    },
+                    "phone_quality": {
+                        "is_valid": false,
+                        "e164": null,
+                        "country": null
+                    },
+                    "confidence_score": 45
+                },
+                "target_type": "lead"
+            },
+            "confidence_score": 45,
+            "email_valid_syntax": false,
+            "email_domain_has_mx": false,
+            "phone_is_valid": false
+        },
+        {
+            "full_name": null,
+            "first_name": null,
+            "last_name": null,
+            "job_title": "Questions",
+            "company_name": "n8n Community",
+            "company_domain": "community.n8n.io",
+            "company_size": null,
+            "industry": null,
+            "email": null,
+            "phone": null,
+            "linkedin_url": null,
+            "website": "https://community.n8n.io/t/is-it-possible-for-webhook-to-return-json-object-instead-of-array/25840",
+            "city": "$('Webhook').first().json.body.area",
+            "country": null,
+            "lead_category": "real_estate",
+            "lead_intent": "buy",
+            "demand_property_type": "building,house",
+            "demand_location": "$('Webhook').first().json.body.area",
+            "budget_min": 5000000.0,
+            "budget_max": 25000000.0,
+            "id": "745b60ae-6dfe-438a-8388-9965088323ce",
+            "source": "google",
+            "source_url": "https://community.n8n.io/t/is-it-possible-for-webhook-to-return-json-object-instead-of-array/25840",
+            "score": 34,
+            "qualification": "cold",
+            "is_verified": false,
+            "fingerprint": "b1419913c7af65044b6f717eae815de7692b19a85444ce869b93141a21ac091a",
+            "scraped_at": "2026-06-20T11:48:03.679546Z",
+            "raw_description": "# Is it possible for webhook to return json object instead of array? Does n8n only response in json array  and can it return as json object {}? I tried pipedream webhook and it returned as json object. I’m working with a rigid system that expecting json object. When working with n8n webhook the system encountered error below due to json array. To fix this error either change the JSON to a JSON object (e.g. the deserialized type to an array or a type that implements a collection interface. JsonArrayAttribute can also be added to the type to force it to deserialize from a JSON array.\\r\\n. With pipedream the response can be as json object rather than array. The problem is that you configured your Webhook Node with: `Respond: When Last Node Finishes\"` and you then used the “Respond to Webhook Node” instead of configuring the Webhook Node to us the “Respond to Webhook Node” by setting it to: `Respond: Using \"Respond to Webhook Node\"`.",
+            "raw_data": {
+                "title": "Is it possible for webhook to return json object instead of array? - Questions - n8n Community",
+                "snippet": "# Is it possible for webhook to return json object instead of array? Does n8n only response in json array  and can it return as json object {}? I tried pipedream webhook and it returned as json object. I’m working with a rigid system that expecting json object. When working with n8n webhook the system encountered error below due to json array. To fix this error either change the JSON to a JSON object (e.g. the deserialized type to an array or a type that implements a collection interface. JsonArrayAttribute can also be added to the type to force it to deserialize from a JSON array.\\r\\n. With pipedream the response can be as json object rather than array. The problem is that you configured your Webhook Node with: `Respond: When Last Node Finishes\"` and you then used the “Respond to Webhook Node” instead of configuring the Webhook Node to us the “Respond to Webhook Node” by setting it to: `Respond: Using \"Respond to Webhook Node\"`.",
+                "url": "https://community.n8n.io/t/is-it-possible-for-webhook-to-return-json-object-instead-of-array/25840",
+                "provider": "tavily",
+                "provider_score": 0.11906992,
+                "favicon": "https://community.n8n.io/uploads/default/optimized/2X/d/d517179c8ee66c101293b08c4f64d0749b015c87_2_180x180.png",
+                "structured_data": {
+                    "company_name": "n8n Community"
+                },
+                "quality": {
+                    "email_quality": {
+                        "valid_syntax": false,
+                        "domain_has_mx": false,
+                        "type": null
+                    },
+                    "phone_quality": {
+                        "is_valid": false,
+                        "e164": null,
+                        "country": null
+                    },
+                    "confidence_score": 45
+                },
+                "target_type": "lead"
+            },
+            "confidence_score": 45,
+            "email_valid_syntax": false,
+            "email_domain_has_mx": false,
+            "phone_is_valid": false
+        }
+    ],
+    "properties": [],
+    "created_at": "2026-06-20T11:45:30.381233Z",
+    "updated_at": "2026-06-20T11:48:03.981741Z",
+    "error": null
+}

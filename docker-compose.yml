@@ -1,0 +1,129 @@
+services:
+  # ─── API ──────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scoutapi_api
+    ports:
+      - "8000:8000"
+    env_file: .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - scoutapi_net
+
+  # ─── ARQ Worker ───────────────────────────────────────
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scoutapi_worker
+    env_file: .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    # Le worker n'est pas encore implémenté: on garde le conteneur en vie
+    command: ["arq", "app.worker.WorkerSettings"]
+    healthcheck:
+      disable: true
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - scoutapi_net
+
+  # ─── PostgreSQL ───────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: scoutapi_postgres
+    command: ["postgres", "-c", "log_min_messages=warning", "-c", "log_statement=none"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-scoutapi}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-scoutapi_password}
+      POSTGRES_DB: ${POSTGRES_DB:-scoutapi_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-scoutapi} -d ${POSTGRES_DB:-scoutapi_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - scoutapi_net
+
+  # ─── Redis ────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: scoutapi_redis
+    command: redis-server --appendonly yes --loglevel warning
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - scoutapi_net
+
+  # ─── Prometheus ───────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: scoutapi_prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--log.level=warn'
+    restart: unless-stopped
+    networks:
+      - scoutapi_net
+
+  # ─── Grafana ──────────────────────────────────────────
+  grafana:
+    image: grafana/grafana:latest
+    container_name: scoutapi_grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_LOG_LEVEL=warn
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - scoutapi_net
+
+volumes:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  scoutapi_net:
+    driver: bridge
