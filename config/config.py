@@ -3,6 +3,7 @@ Configuration centralisée — chargée depuis .env via pydantic-settings
 """
 import json
 from typing import List, Optional
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -32,6 +33,17 @@ class Settings(BaseSettings):
 
     # ─── Database ────────────────────────────────────────────
     DATABASE_URL: str = "postgresql+asyncpg://scoutapi:scoutapi_password@localhost:5432/scoutapi_db"
+
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def normalize_database_url(cls, value: str) -> str:
+        if not value:
+            return value
+        if value.startswith("postgres://"):
+            return "postgresql+asyncpg://" + value[len("postgres://") :]
+        if value.startswith("postgresql://"):
+            return "postgresql+asyncpg://" + value[len("postgresql://") :]
+        return value
 
     # ─── Redis ───────────────────────────────────────────────
     REDIS_URL: str = "redis://localhost:6379/0"
