@@ -3,6 +3,7 @@ ScoutAPI — Lead Scraping API
 Entry point principal FastAPI
 """
 from contextlib import asynccontextmanager
+from urllib.parse import urlsplit
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -22,6 +23,16 @@ from app.utils.logger import get_logger
 from app.web.auth_page import auth_page
 
 logger = get_logger(__name__)
+
+
+def _safe_url_target(url: str) -> str:
+    try:
+        parsed = urlsplit(url)
+        host = parsed.hostname or "unknown-host"
+        port = f":{parsed.port}" if parsed.port else ""
+        return f"{parsed.scheme}://{host}{port}"
+    except Exception:
+        return "invalid-url"
 
 # ─── Rate Limiter ──────────────────────────────────────────────
 limiter = Limiter(key_func=get_remote_address)
@@ -50,6 +61,11 @@ async def ensure_runtime_schema(conn) -> None:
 async def lifespan(app: FastAPI):
     # Startup
     logger.info("Starting ScoutAPI...", version=settings.APP_VERSION, env=settings.APP_ENV)
+    logger.info(
+        "Runtime services configured",
+        database=_safe_url_target(settings.DATABASE_URL),
+        redis=_safe_url_target(settings.REDIS_URL),
+    )
 
     # Créer les tables DB
     async with engine.begin() as conn:
